@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weatherApp</title>
+    <style>
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height:90vh;
+           background-color: rgb(74, 53, 14);
+        }
+        #container{
+            height: 80%;
+            width:35%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            background: linear-gradient(180deg,#1b73cbe7,#17a7e5d9,#b6bf06);
+            border-radius: 20%;
+        }
+        input{
+            outline: none;
+            padding:10px;
+            color:black;
+            border-radius:20px;
+            border:none;
+            
+        }
+        #searchBtn{
+            width:70px;
+            height: 50px;
+            color:black;
+            border-radius:50%;
+        }
+        #card{
+            width:50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h3>WeatherApp</h3>
+        <div id="card">
+            <input id="search" type="text" placeholder="enter the place name." spellcheck="false">
+            <button id="searchBtn">search</button>
+        </div>
+        <div id="weather">
+            <h1><p id="temp">22°C</p></h1>
+            <h2></h2><p id="place">Bengalure</p></h2>
+        </div>
+    </div>
+    <script>
+        const apikey="d8e5794480e540276a4547cf5a93a198";
+        const url="https://api.openweathermap.org/data/2.5/weather?&units=metric";
+
+        const searchBox=document.querySelector("#search");
+        const searchBtn=document.querySelector("#searchBtn");
+        async function checkWeather(city){
+            const response=await fetch(url+`&q=${city}`+`&appid=${apikey}`);
+            const data=await response.json();
+            console.log(data);
+            document.querySelector("#place").innerHTML=data.name;
+            document.querySelector("#temp").innerHTML=data.main.temp+"°C";
+        }
+        searchBtn.addEventListener("click",()=>{
+           checkWeather(searchBox.value); 
+        })
+    </script>
+</body>
+</html>
